@@ -10,10 +10,11 @@ function fetchIssues() {
     var severity = issues[i].severity;
     var assignedTo = issues[i].assignedTo;
     var status = issues[i].status;
+      var cDate = issues[i].cDate;
     
     issuesList.innerHTML +=   '<div class="well">'+
                               '<h4><span class="glyphicon glyphicon-calendar"></span> Date: ' + assignedTo + '</h4>'+
-                              '<h6><span class="glyphicon glyphicon-th"></span> Date Added:' + id + '</h6>' +
+                              '<h6><span class="glyphicon glyphicon-th"></span> Date Added:' + cDate + '</h6>' +
                               '<p><span class="label label-info">' + status + '</span></p>'+
                               '<h3>' + desc + '</h3>'+
                               '<p><span class="glyphicon glyphicon-time"></span> ' + severity + ' '+
@@ -28,7 +29,8 @@ document.getElementById('issueInputForm').addEventListener('submit', saveIssue);
 
 function saveIssue(e) {
   var today = new Date();
-  var issueId = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+  var currentDate = (today.getMonth() + 1) + '/' + today.getDate() + '/' + today.getFullYear();
+  var issueId = chance.guid();
   var issueDesc = document.getElementById('issueDescInput').value;
   var issueSeverity = document.getElementById('issueSeverityInput').value;
   var issueAssignedTo = document.getElementById('issueAssignedToInput').value;
@@ -38,7 +40,8 @@ function saveIssue(e) {
     description: issueDesc,
     severity: issueSeverity,
     assignedTo: issueAssignedTo,
-    status: issueStatus
+    status: issueStatus,
+    cDate: currentDate 
   }
   
   if (localStorage.getItem('issues') === null) {
